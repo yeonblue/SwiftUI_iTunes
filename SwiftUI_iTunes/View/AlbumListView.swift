@@ -13,8 +13,16 @@ struct AlbumListView: View {
     
     var body: some View {
         NavigationView {
-            List(viewModel.albums){ album in
-                Text(album.collectionName)
+            List {
+                ForEach(viewModel.albums){ album in
+                    Text(album.collectionName)
+                }
+                
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .onAppear {
+                        //viewModel.loadMore()
+                    }
             }
             .listStyle(.plain)
             .searchable(text: $viewModel.searchTerm) // navigationView가 필요

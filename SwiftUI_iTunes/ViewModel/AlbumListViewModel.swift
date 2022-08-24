@@ -13,20 +13,34 @@ class AlbumListViewModel: ObservableObject {
     @Published var albums: [Album] = [Album]()
     
     var subscription = Set<AnyCancellable>()
-    var limit = 20
+    var limit = 5
+    var page = 0 {
+        didSet {
+            self.fetchAlbums(for: searchTerm)
+        }
+    }
     
     init() {
         $searchTerm
             .dropFirst() // 처음 dataStream 발생 방지)
             .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-            .flatMap({ term in
-                self.fetchAlbumsPublisher(for: term)
-            })
-            .assign(to: &$albums)
+            .sink { [weak self] term in
+                self?.albums = [Album]()
+                self?.page = 0
+                self?.fetchAlbums(for: term)
+            }.store(in: &subscription)
     }
     
     func fetchAlbums(for searchTerm: String) {
-        guard let url = URL(string: "https://itunes.apple.com/search?term=BTS&entity=album&limit=5") else {
+        
+        print("fetchAlbums called", limit, page)
+        
+        guard !searchTerm.isEmpty else {
+            return
+        }
+        
+        let offset = limit * page
+        guard let url = URL(string: "https://itunes.apple.com/search?term=\(searchTerm)&entity=album&limit=\(limit)&offset=\(offset)") else {
             return
         }
         
@@ -38,7 +52,10 @@ class AlbumListViewModel: ObservableObject {
                     let result = try JSONDecoder().decode(AlbumResult.self, from: data)
                     
                     DispatchQueue.main.async {
-                        self.albums = result.results
+                        for album in result.results {
+                            self.albums.append(album)
+                        }
+                        self.page += 1
                     }
                 } catch let err {
                     print(err)
@@ -47,8 +64,15 @@ class AlbumListViewModel: ObservableObject {
         }.resume()
     }
     
+    func loadMore() {
+        print("AlbumListViewModel loadMore() called")
+        self.fetchAlbums(for: searchTerm)
+    }
+    
     func fetchAlbumsPublisher(for searchTerm: String) -> AnyPublisher<[Album], Never> {
-        let url = URL(string: "https://itunes.apple.com/search?term=\(searchTerm)&entity=album&limit=\(limit)")!
+        let offset = limit * page
+        
+        let url = URL(string: "https://itunes.apple.com/search?term=\(searchTerm)&entity=album&limit=\(limit)&offset=\(offset)")!
         
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
