@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4521388D28BE3CFB009863BD /* AlbumSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521388C28BE3CFB009863BD /* AlbumSearchView.swift */; };
 		454FA27328B4F10B00EB9B53 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454FA27228B4F10B00EB9B53 /* Album.swift */; };
 		454FA27628B4F13600EB9B53 /* AlbumListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454FA27528B4F13600EB9B53 /* AlbumListViewModel.swift */; };
 		454FA27828B4F8FE00EB9B53 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454FA27728B4F8FE00EB9B53 /* Song.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4521388C28BE3CFB009863BD /* AlbumSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSearchView.swift; sourceTree = "<group>"; };
 		454FA27228B4F10B00EB9B53 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		454FA27528B4F13600EB9B53 /* AlbumListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewModel.swift; sourceTree = "<group>"; };
 		454FA27728B4F8FE00EB9B53 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
@@ -45,6 +47,7 @@
 		454FA26F28B4F0DA00EB9B53 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4521388C28BE3CFB009863BD /* AlbumSearchView.swift */,
 				454FA27B28B4FD6500EB9B53 /* AlbumListView.swift */,
 			);
 			path = View;
@@ -178,6 +181,7 @@
 			files = (
 				454FA27628B4F13600EB9B53 /* AlbumListViewModel.swift in Sources */,
 				45F45DFF28B4EFAB00E381FE /* ContentView.swift in Sources */,
+				4521388D28BE3CFB009863BD /* AlbumSearchView.swift in Sources */,
 				454FA27A28B4F90800EB9B53 /* Movie.swift in Sources */,
 				45F45DFD28B4EFAB00E381FE /* SwiftUI_iTunesApp.swift in Sources */,
 				454FA27328B4F10B00EB9B53 /* Album.swift in Sources */,

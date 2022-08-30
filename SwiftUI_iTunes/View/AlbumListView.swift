@@ -9,30 +9,36 @@ import SwiftUI
 
 struct AlbumListView: View {
     
-    @StateObject var viewModel = AlbumListViewModel()
+    @ObservedObject var viewModel: AlbumListViewModel
     
     var body: some View {
-        NavigationView {
             List {
                 ForEach(viewModel.albums){ album in
                     Text(album.collectionName)
                 }
                 
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .onAppear {
-                        //viewModel.loadMore()
-                    }
-            }
-            .listStyle(.plain)
-            .searchable(text: $viewModel.searchTerm) // navigationView가 필요
-            .navigationTitle("Search Album")
-        }
+                switch viewModel.state {
+                    case .ready:
+                        Color.clear
+                            .onAppear {
+                                viewModel.loadMore()
+                            }
+                    case .isLoading:
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .frame(width: .infinity)
+                    case .loadedAll:
+                        EmptyView()
+                    case .error(let msg):
+                        Text(msg)
+                            .foregroundColor(.red)
+                }
+            }.listStyle(.plain)
     }
 }
 
 struct AlbumListView_Previews: PreviewProvider {
     static var previews: some View {
-        AlbumListView()
+        AlbumListView(viewModel: AlbumListViewModel())
     }
 }

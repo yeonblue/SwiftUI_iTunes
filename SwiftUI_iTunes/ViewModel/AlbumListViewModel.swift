@@ -5,29 +5,35 @@
 //  Created by yeonBlue on 2022/08/23.
 //
 
-import UIKit
+import Foundation
 import Combine
 
+enum State: Comparable {
+    case ready
+    case isLoading
+    case loadedAll
+    case error(String)
+}
+
 class AlbumListViewModel: ObservableObject {
+    
     @Published var searchTerm: String = ""
     @Published var albums: [Album] = [Album]()
+    @Published var state: State = .ready
     
     var subscription = Set<AnyCancellable>()
-    var limit = 5
-    var page = 0 {
-        didSet {
-            self.fetchAlbums(for: searchTerm)
-        }
-    }
+    var limit = 20
+    var page = 0 
     
     init() {
         $searchTerm
-            .dropFirst() // 처음 dataStream 발생 방지)
+            .dropFirst() // 처음 dataStream 발생 방지
             .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
             .sink { [weak self] term in
                 self?.albums = [Album]()
                 self?.page = 0
                 self?.fetchAlbums(for: term)
+                self?.state = .ready
             }.store(in: &subscription)
     }
     
@@ -39,13 +45,21 @@ class AlbumListViewModel: ObservableObject {
             return
         }
         
+        guard state == .ready else { return }
+        
         let offset = limit * page
         guard let url = URL(string: "https://itunes.apple.com/search?term=\(searchTerm)&entity=album&limit=\(limit)&offset=\(offset)") else {
             return
         }
         
-        URLSession.shared.dataTask(with: url) { data, response, err in
+        state = .isLoading
+        
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, err in
             if let err = err {
+                DispatchQueue.main.async {
+                    self?.state = .error("Error: \(err.localizedDescription)")
+                }
+                
                 print(err.localizedDescription)
             } else if let data = data {
                 do {
@@ -53,12 +67,16 @@ class AlbumListViewModel: ObservableObject {
                     
                     DispatchQueue.main.async {
                         for album in result.results {
-                            self.albums.append(album)
+                            self?.albums.append(album)
                         }
-                        self.page += 1
+                        self?.page += 1
+                        self?.state = (result.results.count == self?.limit) ? .ready : .loadedAll
                     }
                 } catch let err {
                     print(err)
+                    DispatchQueue.main.async {
+                        self?.state = .error("Error: \(err.localizedDescription)")
+                    }
                 }
             }
         }.resume()
