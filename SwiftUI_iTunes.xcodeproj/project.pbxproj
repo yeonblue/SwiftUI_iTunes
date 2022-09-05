@@ -13,6 +13,7 @@
 		454FA27828B4F8FE00EB9B53 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454FA27728B4F8FE00EB9B53 /* Song.swift */; };
 		454FA27A28B4F90800EB9B53 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454FA27928B4F90800EB9B53 /* Movie.swift */; };
 		454FA27C28B4FD6500EB9B53 /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454FA27B28B4FD6500EB9B53 /* AlbumListView.swift */; };
+		45D01F7F28C621850007958B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D01F7E28C621850007958B /* APIError.swift */; };
 		45F45DFD28B4EFAB00E381FE /* SwiftUI_iTunesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F45DFC28B4EFAB00E381FE /* SwiftUI_iTunesApp.swift */; };
 		45F45DFF28B4EFAB00E381FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F45DFE28B4EFAB00E381FE /* ContentView.swift */; };
 		45F45E0128B4EFAC00E381FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45F45E0028B4EFAC00E381FE /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		454FA27728B4F8FE00EB9B53 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		454FA27928B4F90800EB9B53 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		454FA27B28B4FD6500EB9B53 /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
+		45D01F7E28C621850007958B /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		45F45DF928B4EFAB00E381FE /* SwiftUI_iTunes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUI_iTunes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45F45DFC28B4EFAB00E381FE /* SwiftUI_iTunesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_iTunesApp.swift; sourceTree = "<group>"; };
 		45F45DFE28B4EFAB00E381FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				454FA27228B4F10B00EB9B53 /* Album.swift */,
 				454FA27728B4F8FE00EB9B53 /* Song.swift */,
 				454FA27928B4F90800EB9B53 /* Movie.swift */,
+				45D01F7E28C621850007958B /* APIError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				454FA27328B4F10B00EB9B53 /* Album.swift in Sources */,
 				454FA27828B4F8FE00EB9B53 /* Song.swift in Sources */,
 				454FA27C28B4FD6500EB9B53 /* AlbumListView.swift in Sources */,
+				45D01F7F28C621850007958B /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

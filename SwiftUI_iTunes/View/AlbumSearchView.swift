@@ -38,7 +38,8 @@ struct AlbumPlaceholderView: View {
                     searchTerm = text
                 } label: {
                     Text(text)
-                        .font(.body)
+                        .font(.body
+                        )
                 }
 
             }

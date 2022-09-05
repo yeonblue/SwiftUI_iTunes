@@ -15,6 +15,12 @@ enum State: Comparable {
     case error(String)
 }
 
+enum EntityType: String {
+    case album
+    case song
+    case movie
+}
+
 class AlbumListViewModel: ObservableObject {
     
     @Published var searchTerm: String = ""
@@ -48,7 +54,7 @@ class AlbumListViewModel: ObservableObject {
         guard state == .ready else { return }
         
         let offset = limit * page
-        guard let url = URL(string: "https://itunes.apple.com/search?term=\(searchTerm)&entity=album&limit=\(limit)&offset=\(offset)") else {
+        guard let url = createURL(for: searchTerm) else {
             return
         }
         
@@ -85,6 +91,18 @@ class AlbumListViewModel: ObservableObject {
     func loadMore() {
         print("AlbumListViewModel loadMore() called")
         self.fetchAlbums(for: searchTerm)
+    }
+    
+    func createURL(for searchTerm: String, type: EntityType) -> URL? {
+        // https://itunes.apple.com/search?term=BTS&entity=album&limit=5
+        let baseURL = "https://itunes.apple.com/search"
+        var component = URLComponents(string: baseURL)
+        let quaryItems = [URLQueryItem(name: "term", value: searchTerm),
+                          URLQueryItem(name: "entity", value: type.rawValue),
+                          URLQueryItem(name: "limit", value: String(limit)),
+                          URLQueryItem(name: "offset", value: String(limit * page))]
+        component?.queryItems = quaryItems
+        return component?.url
     }
     
     func fetchAlbumsPublisher(for searchTerm: String) -> AnyPublisher<[Album], Never> {
